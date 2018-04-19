@@ -3,6 +3,41 @@ Make "number of files" a command-line parameter instead of hardcoding it in a he
 
 ===FUTURE===
 Forwarding strategy
+afterReceiveInterest - After you get a match, you might have multiple next hops. You pick the best one naively. Keep some score for next hop of the FIB entry. 
+afterReceiveData - Use this to calculate Satisfaction rate, delay, use incoming face.
+afterReceiveNack - Strategy receives this NACK. Delete garbage from the table
+
+Data structure:
+interest-name: Interest timestamp, FIB entry prefix
+fib entry prefix: face1:(satisfaction rate, average delay), face2:(satisfaction rate, average delay)...
+nack-name: tuple of nacked next hops
+
+Once you receive a NACK, send it downstream based on statistics/FIB
+
+Vector - for delay
+From the FIB, you get the face and check the data received/number of interests.. Average delay.
+
+Satisfaction rate, average delay...
+
+Stateful forwarding paper (probe every 200ms)
+
+Probe for -
+    to see if you get data. 
+    Avoid overloading peers
+    
+    Weighted average for load
+
+Discover cached data. 
+Rule of thumb: 
+Once you receive data faster from another interface, use that as a main path and probe the rest.
+
+Refer to https://github.com/named-data/NFD/blob/master/daemon/fw/best-route-strategy2.cpp#L155
+
+Send NACK if you don't have data
+
+Make a change in the consumer to read a random file manifest (instead of 1-n)
+Prefix granularity - for simulation (torrent file, manifest, data)
+
 
 ===PROPOSAL===
 Routing announcements
