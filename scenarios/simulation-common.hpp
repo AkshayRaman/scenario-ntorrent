@@ -35,6 +35,13 @@
 
 #define PI 3.14159
 
+namespace ndn_ntorrent = ndn::ntorrent;
+namespace ndn{
+namespace ntorrent{
+const char * ndn_ntorrent::SharedConstants::commonPrefix = "";
+}
+}
+
 namespace ns3 {
 namespace ndn {
 
