@@ -56,14 +56,6 @@ main(int argc, char *argv[])
   AnimationInterface::SetConstantPosition (nodes.Get(5), 75, 100);
   AnimationInterface::SetConstantPosition (nodes.Get(6), 10, 30);
   
-  //This stuff needs NetAnim to run. 
-  //NetAnim takes the xml file as input.
-  //AnimationInterface anim ("/var/tmp/test.xml");
-  //anim.UpdateNodeDescription (nodes.Get (0), "Producer"); 
-  //anim.UpdateNodeDescription (nodes.Get (1), "Consumer");
-  //anim.UpdateNodeColor (nodes.Get (1), 255, 0, 0);
-  //anim.UpdateNodeColor (nodes.Get (0), 10, 100, 10); 
-
   // Connecting nodes using two links
   PointToPointHelper p2p;
   p2p.Install(nodes.Get(0), nodes.Get(1));

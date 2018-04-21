@@ -86,7 +86,7 @@ main(int argc, char *argv[])
   
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
-  ndnHelper.SetDefaultRoutes(true);
+  //ndnHelper.SetDefaultRoutes(true);
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
@@ -109,6 +109,9 @@ main(int argc, char *argv[])
   std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
   std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
   
+  ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
+  GlobalRoutingHelper::CalculateRoutes();
+
   Simulator::Run();
   Simulator::Destroy();
   
