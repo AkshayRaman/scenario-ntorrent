@@ -19,16 +19,6 @@
  *          Alexander Afanasyev <alexander.afanasyev@ucla.edu>
  */
 
-#include "ns3/core-module.h"
-#include "ns3/network-module.h"
-#include "ns3/point-to-point-module.h"
-#include "ns3/ndnSIM-module.h"
-#include "ns3/netanim-module.h"
-
-#include "src/util/shared-constants.hpp"
-#include "../extensions/ntorrent-consumer-app.hpp"
-#include "../extensions/ntorrent-producer-app.hpp"
-
 #include "simulation-common.hpp"
 
 namespace ndn_ntorrent = ndn::ntorrent;

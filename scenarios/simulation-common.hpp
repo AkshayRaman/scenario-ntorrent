@@ -18,6 +18,23 @@
  * Authors:
  */
 
+#ifndef INCLUDED_SIMULATION_COMMON_HPP
+#define INCLUDED_SIMULATION_COMMON_HPP
+
+#include <cmath>
+
+#include "ns3/core-module.h"
+#include "ns3/ndnSIM-module.h"
+#include "ns3/netanim-module.h"
+#include "ns3/network-module.h"
+#include "ns3/point-to-point-module.h"
+
+#include "../extensions/ntorrent-consumer-app.hpp"
+#include "../extensions/ntorrent-producer-app.hpp"
+#include "src/util/shared-constants.hpp"
+
+#define PI 3.14159
+
 namespace ns3 {
 namespace ndn {
 
@@ -59,3 +76,5 @@ void createAndInstall(ndn::AppHelper x, uint32_t namesPerSegment,
 
 } //namespace ndn
 } //namespace ns3
+
+#endif // INCLUDED_SIMULATION_COMMON_HPP
