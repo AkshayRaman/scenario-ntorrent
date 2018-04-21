@@ -28,13 +28,12 @@ namespace ndn {
  * This scenario simulates a very simple network topology:
  *
  *
- *      +----------+     1Mbps      +--------+     1Mbps      +----------+
- *      | consumer | <------------> | router | <------------> | producer |
- *      +----------+         10ms   +--------+          10ms  +----------+
+ *      +----------+         32kbps            +----------+
+ *      | consumer | <-----------------------> | producer |
+ *      +----------+         10ms              +----------+
  *
  *
  * Consumer requests data from producer with frequency 10 interests per second
- * (interests contain constantly increasing sequence number).
  *
  * For every received interest, producer replies with a data packet, containing
  * 1024 bytes of virtual payload.
