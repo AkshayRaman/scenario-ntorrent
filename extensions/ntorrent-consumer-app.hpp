@@ -73,6 +73,8 @@ public:
   virtual void
   SendInterest(const string& interestName);
 
+  virtual void
+  OnNack(shared_ptr<const lp::Nack> nack);
 
 private:
   std::vector<ndn_ntorrent::TorrentFile> m_torrentSegments;

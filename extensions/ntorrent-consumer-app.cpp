@@ -292,6 +292,10 @@ NTorrentConsumerApp::OnData(shared_ptr<const Data> data)
         }
     }
 }
+void
+NTorrentConsumerApp::OnNack(shared_ptr<const lp::Nack> nack)
+{
+}
 
 } // namespace ndn
 } // namespace ns3

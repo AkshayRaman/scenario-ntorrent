@@ -64,6 +64,9 @@ public:
   virtual void
   generateTorrentFile();
 
+  virtual void
+  OnNack(shared_ptr<const lp::Nack> nack);
+
 private:
   std::vector<ndn_ntorrent::TorrentFile> m_torrentSegments;
   std::vector<ndn_ntorrent::FileManifest> manifests;

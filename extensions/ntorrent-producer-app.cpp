@@ -197,6 +197,10 @@ NTorrentProducerApp::generateTorrentFile()
     NS_LOG_DEBUG("Manifests: " << manifests.size());
     NS_LOG_DEBUG("Data Packets: " << dataPackets.size());
 }
+void
+NTorrentProducerApp::OnNack(shared_ptr<const lp::Nack> nack)
+{
+}
 
 } // namespace ndn
 } // namespace ns3
