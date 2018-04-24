@@ -49,6 +49,13 @@ namespace ndn {
 /*
  * @brief replace a lot of code in the scenarios with a single line.
  * 
+ * @param namesPerSegment Number of names per segment (received as command line argument)
+ * @param namesPerManifest Number of names per manifest (received as command line argument)
+ * @param dataPacketSize Size of each data packet (received as command line argument)
+ * @param type Can be "producer" or "consumer"
+ * @param n Node pointer
+ * @param startTime Time after which this node begins simulation
+ *
  * ndn::AppHelper producerHelper("NTorrentProducerApp");
  * producerHelper.SetAttribute("Prefix", StringValue("/"));
  * producerHelper.SetAttribute("namesPerSegment", IntegerValue(namesPerSegment));
@@ -60,13 +67,6 @@ namespace ndn {
  * 
  * ndn::AppHelper p1("NTorrentProducerApp");
  * createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0f);
- *
- * @param namesPerSegment Number of names per segment (received as command line argument)
- * @param namesPerManifest Number of names per manifest (received as command line argument)
- * @param dataPacketSize Size of each data packet (received as command line argument)
- * @param type Can be "producer" or "consumer"
- * @param n Node pointer
- * @param startTime Time after which this node begins simulation
  *
  */
 
