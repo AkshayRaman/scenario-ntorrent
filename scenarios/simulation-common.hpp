@@ -31,6 +31,7 @@
 
 #include "../extensions/ntorrent-consumer-app.hpp"
 #include "../extensions/ntorrent-producer-app.hpp"
+#include "../extensions/ntorrent-fwd-strategy.hpp"
 #include "src/util/shared-constants.hpp"
 
 #define PI 3.14159
