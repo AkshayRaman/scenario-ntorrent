@@ -46,6 +46,7 @@ NTorrentStrategy::afterReceiveInterest(const Face& inFace, const Interest& inter
     return;
   }
 
+  //After you get a match, you might have multiple next hops. You pick the best one naively. Keep some score for next hop of the FIB entry.
   const fib::Entry& fibEntry = this->lookupFib(*pitEntry);
   const fib::NextHopList& nexthops = fibEntry.getNextHops();
 
