@@ -111,6 +111,7 @@ Available simulations
     ntorrent-simple
     ntorrent-multi-consumer
     ntorrent-fully-connected-consumer
+    ntorrent-forwarding-scenario
 ---------------
 
 A work in progress...
