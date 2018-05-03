@@ -45,26 +45,20 @@ main(int argc, char *argv[])
 
   // Creating nodes
   NodeContainer nodes;
-  nodes.Create(2);
+  nodes.Create(8);
   
-  AnimationInterface::SetConstantPosition (nodes.Get(0), 20, 20);
-  AnimationInterface::SetConstantPosition (nodes.Get(1), 60, 60);
-  
-  //This stuff needs NetAnim to run. 
-  //NetAnim takes the xml file as input.
-  //AnimationInterface anim ("/var/tmp/test.xml");
-  //anim.UpdateNodeDescription (nodes.Get (0), "Producer"); 
-  //anim.UpdateNodeDescription (nodes.Get (1), "Consumer");
-  //anim.UpdateNodeColor (nodes.Get (1), 255, 0, 0);
-  //anim.UpdateNodeColor (nodes.Get (0), 10, 100, 10); 
-
   // Connecting nodes using two links
   PointToPointHelper p2p;
   p2p.Install(nodes.Get(0), nodes.Get(1));
+  p2p.Install(nodes.Get(3), nodes.Get(2));
+  p2p.Install(nodes.Get(1), nodes.Get(3));
+  p2p.Install(nodes.Get(3), nodes.Get(4));
+  p2p.Install(nodes.Get(4), nodes.Get(5));
+  p2p.Install(nodes.Get(2), nodes.Get(6));
+  p2p.Install(nodes.Get(2), nodes.Get(7));
   
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
-  //ndnHelper.SetDefaultRoutes(true);
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
@@ -76,9 +70,34 @@ main(int argc, char *argv[])
   // Installing applications
   ndn::AppHelper p1("NTorrentProducerApp");
   createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(0), 60, 100);
+  
+  AnimationInterface::SetConstantPosition (nodes.Get(1), 180, 100);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
-  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(1), 3.0f);
+  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(3), 3.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(3), 120, 100);
+  
+  ndn::AppHelper c2("NTorrentConsumerApp");
+  createAndInstall(c2, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(2), 6.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(2), 180, 75);
+  
+  ndn::AppHelper c3("NTorrentConsumerApp");
+  createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(4), 7.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(4), 180, 125);
+  
+  ndn::AppHelper c4("NTorrentConsumerApp");
+  createAndInstall(c4, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(5), 9.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(5), 150, 150);
+  
+  ndn::AppHelper c5("NTorrentConsumerApp");
+  createAndInstall(c5, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(6), 15.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(6), 200, 60);
+  
+  ndn::AppHelper c6("NTorrentConsumerApp");
+  createAndInstall(c6, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(7), 11.0f);
+  AnimationInterface::SetConstantPosition (nodes.Get(7), 200, 90);
+  
   
   Simulator::Stop(Seconds(60.0));
 
