@@ -20,7 +20,20 @@ public:
                        const shared_ptr<pit::Entry>& pitEntry) override;
 
   //TODO: Add afterReceiveData, afterReceiveNack
+    
+  virtual void
+  beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, 
+                        const Face &inFace, const Data &data);
 
+  virtual void
+  beforeExpirePendingInterest (const shared_ptr< pit::Entry > &pitEntry);
+
+  virtual void  
+  afterReceiveNack (const Face &inFace, const lp::Nack &nack, 
+          const shared_ptr< pit::Entry > &pitEntry);
+
+  virtual void  onDroppedInterest (const Face &outFace, const Interest &interest);
+  
   static const Name&
   getStrategyName();
 

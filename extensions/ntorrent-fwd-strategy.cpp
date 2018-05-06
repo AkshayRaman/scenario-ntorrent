@@ -71,6 +71,32 @@ NTorrentStrategy::afterReceiveInterest(const Face& inFace, const Interest& inter
   this->sendInterest(pitEntry, selected->getFace(), interest);
 }
 
+void
+NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, const Face &inFace, const Data &data)
+{
+  NFD_LOG_TRACE("beforeSatisfyInterest");
+}
+  
+void
+NTorrentStrategy::beforeExpirePendingInterest (const shared_ptr< pit::Entry > &pitEntry)
+{
+  NFD_LOG_TRACE("beforeExpirePendingInterest");
+}
+
+void  
+NTorrentStrategy::afterReceiveNack (const Face &inFace, const lp::Nack &nack, 
+          const shared_ptr< pit::Entry > &pitEntry)
+{
+  NFD_LOG_TRACE("afterReceiveNack");
+}
+
+void 
+NTorrentStrategy::onDroppedInterest (const Face &outFace, const Interest &interest)
+{
+  NFD_LOG_TRACE("onDroppedInterest");
+}
+  
+
 const Name&
 NTorrentStrategy::getStrategyName()
 {
