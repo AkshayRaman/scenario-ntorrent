@@ -23,16 +23,18 @@ public:
     
   virtual void
   beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, 
-                        const Face &inFace, const Data &data);
+                        const Face &inFace, const Data &data) override;
 
   virtual void
-  beforeExpirePendingInterest (const shared_ptr< pit::Entry > &pitEntry);
+  beforeExpirePendingInterest (const shared_ptr< pit::Entry > &pitEntry) override;
 
   virtual void  
   afterReceiveNack (const Face &inFace, const lp::Nack &nack, 
-          const shared_ptr< pit::Entry > &pitEntry);
+          const shared_ptr< pit::Entry > &pitEntry) override;
 
-  virtual void  onDroppedInterest (const Face &outFace, const Interest &interest);
+  virtual void  
+  onDroppedInterest (const Face &outFace, const Interest &interest)
+  override;
   
   static const Name&
   getStrategyName();
