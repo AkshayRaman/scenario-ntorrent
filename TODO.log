@@ -1,7 +1,6 @@
 ===TODO===
 Make "number of files" a command-line parameter instead of hardcoding it in a header file
 
-===FUTURE===
 Forwarding strategy
 afterReceiveInterest - After you get a match, you might have multiple next hops. You pick the best one naively. Keep some score for next hop of the FIB entry. 
 afterReceiveData - Use this to calculate Satisfaction rate, delay, use incoming face.
