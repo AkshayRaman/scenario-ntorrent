@@ -96,12 +96,13 @@ NTorrentStrategy::onDroppedInterest (const Face &outFace, const Interest &intere
   NFD_LOG_TRACE("onDroppedInterest");
 }
   
+/*
 void  
 NTorrentStrategy::afterReceiveData (const shared_ptr<pit::Entry>& pitEntry,
         const Face& inFace, const Data& data)
 {
   NFD_LOG_TRACE("afterReceiveData");
-}
+}*/
 
 
 const Name&

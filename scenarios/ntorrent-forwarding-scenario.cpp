@@ -98,7 +98,6 @@ main(int argc, char *argv[])
   createAndInstall(c6, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(7), 11.0f);
   AnimationInterface::SetConstantPosition (nodes.Get(7), 200, 90);
   
-  
   Simulator::Stop(Seconds(60.0));
 
   std::cout << "Running with parameters: " << std::endl;

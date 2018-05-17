@@ -36,9 +36,9 @@ public:
   onDroppedInterest (const Face &outFace, const Interest &interest)
   override;
 
-  virtual void
+  /*virtual void
   afterReceiveData (const shared_ptr<pit::Entry>& pitEntry,
-          const Face& inFace, const Data& data);
+          const Face& inFace, const Data& data);*/
   
   static const Name&
   getStrategyName();
