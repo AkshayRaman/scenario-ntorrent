@@ -44,7 +44,7 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
-  int nodeCount = 10;
+  int nodeCount = 6;
   int radius = 50;
   
   // Creating nodes
@@ -73,7 +73,8 @@ main(int argc, char *argv[])
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
-  StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
+  //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
+  StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
 
   GlobalRoutingHelper ndnGlobalRoutingHelper;
   ndnGlobalRoutingHelper.InstallAll();

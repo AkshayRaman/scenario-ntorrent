@@ -57,6 +57,7 @@ NTorrentStrategy::afterReceiveInterest(const Face& inFace, const Interest& inter
   }
 
   fib::NextHopList::const_iterator selected;
+  std::cout << "SIZE::: " << nexthops.size() << std::endl;
   do {
     boost::random::uniform_int_distribution<> dist(0, nexthops.size() - 1);
     const size_t randomIndex = dist(m_randomGenerator);
@@ -65,6 +66,7 @@ NTorrentStrategy::afterReceiveInterest(const Face& inFace, const Interest& inter
 
     for (selected = nexthops.begin(); selected != nexthops.end() && currentIndex != randomIndex;
          ++selected, ++currentIndex) {
+        std::cout << currentIndex << "COST: "<< selected->getCost() << std::endl;
     }
   } while (!canForwardToNextHop(inFace, pitEntry, *selected));
 
