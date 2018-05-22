@@ -45,6 +45,10 @@ public:
 
 protected:
   boost::random::mt19937 m_randomGenerator;
+  std::unordered_map<Name, std::pair<int,Name>> interest_timestamp_fib_map;
+  typedef std::unordered_map<int, std::pair<float,float>> face_satisfaction_delay;
+  std::unordered_map<Name, face_satisfaction_delay> fib_entry_prefix;
+  std::unordered_map<Name,std::vector<int>> nackedname_nexthop;
 };
 
 } // namespace fw
