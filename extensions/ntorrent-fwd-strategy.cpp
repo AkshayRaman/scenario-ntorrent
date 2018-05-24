@@ -6,6 +6,8 @@
 
 #include "core/logger.hpp"
 
+#define MAX_SCORE 100
+
 NFD_LOG_INIT("NTorrentStrategy");
 
 namespace nfd {
@@ -56,7 +58,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     return;
   }
 
-    boost::random::uniform_int_distribution<> dist(1, 100);
+    boost::random::uniform_int_distribution<> dist(1, MAX_SCORE);
     
     Name interestName = interest.getName();
     std::unordered_map<Name, face_score>::iterator it = interest_hop_score_map.find(interestName);
@@ -65,10 +67,11 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         face_score f;
         interest_hop_score_map.insert(std::make_pair(interestName, f));
     }
+    
     //Add randomScore to the data structure
     fib::NextHopList::const_iterator selected;
     for (selected = nexthops.begin(); selected != nexthops.end(); ++selected) {
-        const size_t randomScore = dist(m_randomGenerator);
+        size_t randomScore = dist(m_randomGenerator);
         int face_id = selected->getFace().getId();
         
         auto it = interest_hop_score_map.find(interestName);
@@ -77,6 +80,8 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         auto f_it = f.find(face_id);
         if(f_it == f.end())
         {
+            //Fix best score, always use same hop
+            //if(face_id==256) randomScore=MAX_SCORE+1;
             f.insert(std::pair<int,int>(face_id, randomScore));
         }
         else
@@ -104,7 +109,10 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         }
     }
     if(best_hop!=-1)
+    {
+        std::cout << "Using best hop: " << best_hop << std::endl;
         this->sendInterest(pitEntry, *getFace(best_hop), interest);
+    }
     //else send NACK
         
     /*for (std::pair<Name, face_score> element : interest_hop_score_map)
