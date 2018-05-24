@@ -86,8 +86,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         }
         else
         {
-            //f_it->second += randomScore;
-            //std::cout << "UPDATED!!!" << std::endl;
+            f_it->second += randomScore;
         }
         it->second = f;
     }
@@ -110,7 +109,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     }
     if(best_hop!=-1)
     {
-        std::cout << "Using best hop: " << best_hop << std::endl;
+        //std::cout << "Using best hop: " << best_hop << std::endl;
         this->sendInterest(pitEntry, *getFace(best_hop), interest);
     }
     //else send NACK
