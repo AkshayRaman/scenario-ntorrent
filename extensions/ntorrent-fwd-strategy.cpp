@@ -91,14 +91,25 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     it = interest_hop_score_map.find(interestName);
     face_score f = it->second;
     //std::cout << interest_hop_score_map.size() << std::endl;
-    //int best_hop=-1; int best_score=0;
+    int best_hop=-1; int best_score=0;
     
-    for (std::pair<Name, face_score> element : interest_hop_score_map)
+    std::cout << it->first << std::endl;
+    for(std::pair<int, int> element : it->second)
+    {
+        if(element.second > best_score)
+        {
+            Ptr<Face> temp_face = GetNode()->GetObject<L3Protocol>()->GetFaceById(element.first);
+            best_score = element.second;
+            best_hop = element.first;
+        }
+        std::cout << element.first << ", " << element.second << std::endl;
+    }
+    /*for (std::pair<Name, face_score> element : interest_hop_score_map)
     {
         std::cout << element.first << std::endl;
         for(std::pair<int, int> e1 : element.second)
             std::cout << e1.first << ", " << e1.second << std::endl;
-    }
+    }*/
 
     if(canForwardToNextHop(inFace, pitEntry, *selected))
         this->sendInterest(pitEntry, selected->getFace(), interest);
