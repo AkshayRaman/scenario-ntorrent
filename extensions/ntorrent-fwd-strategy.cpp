@@ -56,21 +56,41 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     return;
   }
 
-  fib::NextHopList::const_iterator selected;
-  std::cout << "SIZE::: " << nexthops.size() << std::endl;
-  do {
-    boost::random::uniform_int_distribution<> dist(0, nexthops.size() - 1);
-    const size_t randomIndex = dist(m_randomGenerator);
-
-    uint64_t currentIndex = 0;
-
-    for (selected = nexthops.begin(); selected != nexthops.end() && currentIndex != randomIndex;
-         ++selected, ++currentIndex) {
-        std::cout << currentIndex << "COST: "<< selected->getCost() << std::endl;
+    boost::random::uniform_int_distribution<> dist(1, 100);
+    
+    Name interestName = interest.getName();
+    std::unordered_map<Name, face_score>::iterator it = interest_hop_score_map.find(interestName);
+    if(it==interest_hop_score_map.end())
+    {
+        face_score f;
+        interest_hop_score_map.insert(std::make_pair(interestName, f));
     }
-  } while (!canForwardToNextHop(inFace, pitEntry, *selected));
-
-  this->sendInterest(pitEntry, selected->getFace(), interest);
+    //Add randomScore to the data structure
+    fib::NextHopList::const_iterator selected;
+    for (selected = nexthops.begin(); selected != nexthops.end(); ++selected) {
+        const size_t randomScore = dist(m_randomGenerator);
+        std::unordered_map<Name, face_score>::iterator it = interest_hop_score_map.find(interestName);
+        
+        int face_id = selected->getFace().getId();
+        face_score f = it->second;
+        face_score::iterator f_it = f.find(face_id);
+        if(f_it == f.end())
+        {
+            f.insert(std::pair<int,int>(face_id, randomScore));
+        }
+        else
+        {
+            f_it->second += randomScore; 
+        }
+        std::cout << f.size() << std::endl;
+    }
+    
+    //pick best hop
+    //it = interest_hop_score_map.find(interestName);
+    //face_score f = it->second;
+    //std::cout << interest_hop_score_map.size() << std::endl;
+    //int best_hop=-1; int best_score=0;
+  //this->sendInterest(pitEntry, selected->getFace(), interest);
 }
 
 void
