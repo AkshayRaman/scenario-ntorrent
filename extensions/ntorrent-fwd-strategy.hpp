@@ -16,10 +16,10 @@ public:
   virtual ~NTorrentStrategy() override;
 
   virtual void
-  afterReceiveInterest(const Face& inFace, const Interest& interest,
+  afterReceiveInterest (const Face& inFace, const Interest& interest,
                        const shared_ptr<pit::Entry>& pitEntry) override;
 
-  //TODO: Add afterReceiveData, afterReceiveNack
+  //TODO: Add afterReceiveData
     
   virtual void
   beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, 
@@ -36,9 +36,9 @@ public:
   onDroppedInterest (const Face &outFace, const Interest &interest)
   override;
 
-  /*virtual void
+  virtual void
   afterReceiveData (const shared_ptr<pit::Entry>& pitEntry,
-          const Face& inFace, const Data& data);*/
+          const Face& inFace, const Data& data);
   
   static const Name&
   getStrategyName();

@@ -36,7 +36,7 @@ hasFaceForForwarding(const Face& inFace, const fib::NextHopList& nexthops, const
 }
 
 void
-NTorrentStrategy::afterReceiveInterest(const Face& inFace, const Interest& interest,
+NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& interest,
                                                  const shared_ptr<pit::Entry>& pitEntry)
 {
   NFD_LOG_TRACE("afterReceiveInterest");
@@ -98,13 +98,12 @@ NTorrentStrategy::onDroppedInterest (const Face &outFace, const Interest &intere
   NFD_LOG_TRACE("onDroppedInterest");
 }
   
-/*
 void  
 NTorrentStrategy::afterReceiveData (const shared_ptr<pit::Entry>& pitEntry,
         const Face& inFace, const Data& data)
 {
   NFD_LOG_TRACE("afterReceiveData");
-}*/
+}
 
 
 const Name&
