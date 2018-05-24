@@ -81,29 +81,32 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         }
         else
         {
-            f_it->second += randomScore; 
+            //f_it->second += randomScore;
+            //std::cout << "UPDATED!!!" << std::endl;
         }
         it->second = f;
-        std::cout << f.size() << std::endl;
     }
     
     //pick best hop
     it = interest_hop_score_map.find(interestName);
     face_score f = it->second;
-    //std::cout << interest_hop_score_map.size() << std::endl;
     int best_hop=-1; int best_score=0;
     
-    std::cout << it->first << std::endl;
     for(std::pair<int, int> element : it->second)
     {
         if(element.second > best_score)
         {
-            Ptr<Face> temp_face = GetNode()->GetObject<L3Protocol>()->GetFaceById(element.first);
-            best_score = element.second;
-            best_hop = element.first;
+            Face *face = getFace(element.first);
+            if(canForwardToNextHop(inFace, pitEntry, fib::NextHop(*face))){
+                best_score = element.second;
+                best_hop = element.first;
+            }
         }
-        std::cout << element.first << ", " << element.second << std::endl;
     }
+    if(best_hop!=-1)
+        this->sendInterest(pitEntry, *getFace(best_hop), interest);
+    //else send NACK
+        
     /*for (std::pair<Name, face_score> element : interest_hop_score_map)
     {
         std::cout << element.first << std::endl;
@@ -111,8 +114,6 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
             std::cout << e1.first << ", " << e1.second << std::endl;
     }*/
 
-    if(canForwardToNextHop(inFace, pitEntry, *selected))
-        this->sendInterest(pitEntry, selected->getFace(), interest);
 }
 
 void
