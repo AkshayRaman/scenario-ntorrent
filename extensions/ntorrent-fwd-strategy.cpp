@@ -80,7 +80,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         auto f_it = f.find(face_id);
         if(f_it == f.end())
         {
-            //Fix best score, always use same hop
+            //"Force" best score, always use same hop
             //if(face_id==256) randomScore=MAX_SCORE+1;
             f.insert(std::pair<int,int>(face_id, randomScore));
         }
@@ -114,7 +114,8 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     }
     //else send NACK
         
-    /*for (std::pair<Name, face_score> element : interest_hop_score_map)
+    /*Print the interest_hop_score_map
+     * for (std::pair<Name, face_score> element : interest_hop_score_map)
     {
         std::cout << element.first << std::endl;
         for(std::pair<int, int> e1 : element.second)
