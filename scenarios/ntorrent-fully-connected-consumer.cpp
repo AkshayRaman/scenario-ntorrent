@@ -84,11 +84,21 @@ main(int argc, char *argv[])
   createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0f);
   
   // Consumer
-  for(int i=1; i<=nodeCount/2; i++)
+  /*for(int i=1; i<=nodeCount/2; i++)
   {
       ndn::AppHelper c1("NTorrentConsumerApp");
       createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(i), 3.0 + i*1);
       createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(nodeCount - i), 3.0 + i*1);
+  }*/
+  
+  //Random time
+  //srand(time(NULL));
+  for(int i=1; i<nodeCount; i++)
+  {
+      ndn::AppHelper c1("NTorrentConsumerApp");
+      float rand_time = 3.0 + rand() % 10;
+      createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(i), rand_time);
+      std::cout << "Node " << i << " starts at " << rand_time << "s" << std::endl;
   }
 
   Simulator::Stop(Seconds(120.0));
