@@ -200,7 +200,8 @@ NTorrentConsumerApp::copyTorrentFile()
 void
 NTorrentConsumerApp::OnData(shared_ptr<const Data> data)
 {
-    NS_LOG_DEBUG("RECEIVED: " << data->getFullName() << " from face: " << m_face.get()->getId());
+    NS_LOG_DEBUG("RECEIVED: " << data->getFullName());
+    //NS_LOG_DEBUG("RECEIVED: " << data->getFullName() << " from face: " << m_face.get()->getId());
     ndn_ntorrent::IoUtil::NAME_TYPE interestType = ndn_ntorrent::IoUtil::findType(data->getFullName());
 
     //shared_ptr<nfd::Forwarder> m_forwarder = GetNode()->GetObject<L3Protocol>()->getForwarder();

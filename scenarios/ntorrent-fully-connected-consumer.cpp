@@ -44,7 +44,7 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
-  int nodeCount = 9;
+  int nodeCount = 11;
   int radius = 50;
   
   // Creating nodes
@@ -87,8 +87,8 @@ main(int argc, char *argv[])
   for(int i=1; i<=nodeCount/2; i++)
   {
       ndn::AppHelper c1("NTorrentConsumerApp");
-      createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(i), 3.0 + i*5);
-      createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(nodeCount - i), 3.0 + i*5);
+      createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(i), 3.0 + i*1);
+      createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(nodeCount - i), 3.0 + i*1);
   }
 
   Simulator::Stop(Seconds(120.0));
