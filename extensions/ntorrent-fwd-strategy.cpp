@@ -122,27 +122,47 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
             std::cout << e1.first << ", " << e1.second << std::endl;
     }*/
 
+    uint16_t face_id = inFace.getId();
+    auto it1 = face_satisfaction_rate.find(face_id);
+    //If nothing is found for this face, initialize it with 0 satisfied and 1 received
+    std::pair<float,float> p = std::make_pair(0,1);
+    if(it1==face_satisfaction_rate.end())
+    {
+      face_satisfaction_rate.insert(std::make_pair(face_id, p));
+    }
+    else
+    {
+        p = it1->second;
+        p.second += 1;
+        it1->second = p;
+    }
+    std::cout << p.first << ", " << p.second << std::endl;
 }
 
 void
 NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, const Face &inFace, const Data &data)
 {
   NFD_LOG_TRACE("beforeSatisfyInterest");
+  ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
+  if(dataType != ndn_ntorrent::IoUtil::DATA_PACKET)
+      return;
+  
   uint16_t face_id = inFace.getId();
-  auto it = face_satisfaction_rate.find(face_id);
+  auto it1 = face_satisfaction_rate.find(face_id);
   //If nothing is found for this face, initialize it with 0 satisfied and 1 received
   std::pair<float,float> p = std::make_pair(0,1);
-  if(it==face_satisfaction_rate.end())
+  if(it1==face_satisfaction_rate.end())
   {
     face_satisfaction_rate.insert(std::make_pair(face_id, p));
   }
   else
   {
-      p = it->second;
-      p.second += 1;
-      it->second = p;
+      p = it1->second;
+      p.first += 1;
+      it1->second = p;
   }
-  //std::cout << p.first << ", " << p.second << std::endl;
+  std::cout << p.first << ", " << p.second << std::endl;
+    
 }
   
 void

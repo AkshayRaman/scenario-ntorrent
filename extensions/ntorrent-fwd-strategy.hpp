@@ -1,5 +1,13 @@
 #ifndef NTORRENT_STRATEGY_HPP
 #define NTORRENT_STRATEGY_HPP
+#include "src/torrent-file.hpp"
+#include "src/file-manifest.hpp"
+#include "src/torrent-manager.hpp"
+#include "src/util/shared-constants.hpp"
+#include "src/util/simulation-constants.hpp"
+#include "src/util/io-util.hpp"
+
+namespace ndn_ntorrent = ndn::ntorrent;
 
 #include <boost/random/mersenne_twister.hpp>
 #include "face/face.hpp"
