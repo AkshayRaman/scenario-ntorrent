@@ -128,6 +128,21 @@ void
 NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, const Face &inFace, const Data &data)
 {
   NFD_LOG_TRACE("beforeSatisfyInterest");
+  uint16_t face_id = inFace.getId();
+  auto it = face_satisfaction_rate.find(face_id);
+  //If nothing is found for this face, initialize it with 0 satisfied and 1 received
+  std::pair<float,float> p = std::make_pair(0,1);
+  if(it==face_satisfaction_rate.end())
+  {
+    face_satisfaction_rate.insert(std::make_pair(face_id, p));
+  }
+  else
+  {
+      p = it->second;
+      p.second += 1;
+      it->second = p;
+  }
+  //std::cout << p.first << ", " << p.second << std::endl;
 }
   
 void

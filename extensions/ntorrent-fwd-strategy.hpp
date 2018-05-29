@@ -50,7 +50,7 @@ protected:
   std::unordered_map<Name, face_score> interest_hop_score_map;
   
   typedef std::unordered_map<int, std::pair<float,float>> i_f_f; //Face mapped with two floats
-  i_f_f face_average_satisfaction; //Face mapped to interests satisfied/interests recieved
+  i_f_f face_satisfaction_rate; //Face mapped to interests satisfied/interests recieved
   i_f_f face_average_delay; //Face mapped to total delay/number of transfers
   
   std::unordered_map<Name,std::vector<int>> nackedname_nexthop;
