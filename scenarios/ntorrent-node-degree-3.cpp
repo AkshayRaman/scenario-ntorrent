@@ -73,15 +73,15 @@ main(int argc, char *argv[])
   //Peer 5
   AnimationInterface::SetConstantPosition (nodes.Get(7), 90, 120);
   
-  p2p.Install(nodes.Get(0), nodes.Get(3));
-  p2p.Install(nodes.Get(0), nodes.Get(1));
-  p2p.Install(nodes.Get(0), nodes.Get(2));
+  createLink(p2p, nodes.Get(0), nodes.Get(3));
+  createLink(p2p, nodes.Get(0), nodes.Get(1));
+  createLink(p2p, nodes.Get(0), nodes.Get(2));
   
-  p2p.Install(nodes.Get(1), nodes.Get(4));
-  p2p.Install(nodes.Get(1), nodes.Get(5));
+  createLink(p2p, nodes.Get(1), nodes.Get(4));
+  createLink(p2p, nodes.Get(1), nodes.Get(5));
   
-  p2p.Install(nodes.Get(2), nodes.Get(6));
-  p2p.Install(nodes.Get(2), nodes.Get(7));
+  createLink(p2p, nodes.Get(2), nodes.Get(6));
+  createLink(p2p, nodes.Get(2), nodes.Get(7));
   
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
