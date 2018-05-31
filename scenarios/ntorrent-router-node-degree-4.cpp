@@ -29,8 +29,8 @@ main(int argc, char *argv[])
 {
 
   // setting default parameters for PointToPoint links and channels
-  Config::SetDefault("ns3::PointToPointNetDevice::DataRate", StringValue("32kbps"));
-  Config::SetDefault("ns3::PointToPointChannel::Delay", StringValue("10ms"));
+  //Config::SetDefault("ns3::PointToPointNetDevice::DataRate", StringValue("32kbps"));
+  //Config::SetDefault("ns3::PointToPointChannel::Delay", StringValue("10ms"));
 
   //defaults for command line arguments
   uint32_t namesPerSegment = 2;
