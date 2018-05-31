@@ -88,7 +88,7 @@ void createLink(PointToPointHelper p2p, Ptr<Node> n1, Ptr<Node> n2)
     p2p.Install(n1, n2);
 }
 
-//Helper functions to create links with parameters
+//Helper functions to create links with data rate and delay
 void createLink(PointToPointHelper p2p, Ptr<Node> n1, Ptr<Node> n2, std::string dataRate, std::string delay)
 {
     p2p.SetDeviceAttribute ("DataRate", StringValue(dataRate));
