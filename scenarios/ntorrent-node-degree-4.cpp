@@ -91,15 +91,15 @@ main(int argc, char *argv[])
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
-  StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
-  //StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
+  //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
+  StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
 
   GlobalRoutingHelper ndnGlobalRoutingHelper;
   ndnGlobalRoutingHelper.InstallAll();
 
   // Installing applications
   ndn::AppHelper p1("NTorrentProducerApp");
-  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 0.0);
+  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
   createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(4), 5.0);
