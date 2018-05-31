@@ -55,20 +55,20 @@ main(int argc, char *argv[])
   
   //https://named-data.net/wp-content/uploads/2017/06/2017-icccn-ntorrent.pdf#figure.caption.7
   
-  //Peer 4
+  //Peer 4 - Acts as seeder (here, producer)
   AnimationInterface::SetConstantPosition (nodes.Get(0), 75, 0);
-  //Router 4
+  //Router 4 
   AnimationInterface::SetConstantPosition (nodes.Get(1), 75, 30);
-  //Peer 2
+  //Peer 2 - Downloads data third
   AnimationInterface::SetConstantPosition (nodes.Get(2), 75, 90);
   //Router 2
   AnimationInterface::SetConstantPosition (nodes.Get(3), 75, 120);
   
-  //Peer 1
+  //Peer 1 - Downloads data first
   AnimationInterface::SetConstantPosition (nodes.Get(4), 0, 60);
   //Router 1
   AnimationInterface::SetConstantPosition (nodes.Get(5), 30, 60);
-  //Peer 3
+  //Peer 3 - Downloads data second
   AnimationInterface::SetConstantPosition (nodes.Get(6), 120, 60);
   //Router 3
   AnimationInterface::SetConstantPosition (nodes.Get(7), 150, 60);
@@ -91,18 +91,24 @@ main(int argc, char *argv[])
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
-  //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
-  StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
+  StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
+  //StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
 
   GlobalRoutingHelper ndnGlobalRoutingHelper;
   ndnGlobalRoutingHelper.InstallAll();
 
   // Installing applications
   ndn::AppHelper p1("NTorrentProducerApp");
-  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0);
+  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 0.0);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
-  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(1), 3.0);
+  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(4), 5.0);
+
+  ndn::AppHelper c2("NTorrentConsumerApp");
+  createAndInstall(c2, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(6), 7.5);
+
+  ndn::AppHelper c3("NTorrentConsumerApp");
+  createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(2), 10.0);
 
   Simulator::Stop(Seconds(120.0));
 

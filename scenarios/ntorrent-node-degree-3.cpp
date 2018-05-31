@@ -96,7 +96,7 @@ main(int argc, char *argv[])
 
   // Installing applications
   ndn::AppHelper p1("NTorrentProducerApp");
-  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0f);
+  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
   createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(1), 3.0);
