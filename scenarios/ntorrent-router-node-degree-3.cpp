@@ -29,8 +29,8 @@ main(int argc, char *argv[])
 {
 
   // setting default parameters for PointToPoint links and channels
-  Config::SetDefault("ns3::PointToPointNetDevice::DataRate", StringValue("32kbps"));
-  Config::SetDefault("ns3::PointToPointChannel::Delay", StringValue("10ms"));
+  //Config::SetDefault("ns3::PointToPointNetDevice::DataRate", StringValue("32kbps"));
+  //Config::SetDefault("ns3::PointToPointChannel::Delay", StringValue("10ms"));
 
   //defaults for command line arguments
   uint32_t namesPerSegment = 2;
@@ -96,10 +96,19 @@ main(int argc, char *argv[])
 
   // Installing applications
   ndn::AppHelper p1("NTorrentProducerApp");
-  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0);
+  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(3), 1.0);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
-  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(1), 3.0);
+  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(4), 10.0);
+
+  ndn::AppHelper c2("NTorrentConsumerApp");
+  createAndInstall(c2, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(5), 10.0);
+
+  ndn::AppHelper c3("NTorrentConsumerApp");
+  createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(6), 10.0);
+
+  ndn::AppHelper c4("NTorrentConsumerApp");
+  createAndInstall(c4, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(7), 10.0);
 
   Simulator::Stop(Seconds(120.0));
 
