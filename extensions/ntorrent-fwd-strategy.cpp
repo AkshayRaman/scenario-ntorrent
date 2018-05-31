@@ -145,12 +145,12 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
 {
   NFD_LOG_TRACE("beforeSatisfyInterest");
   uint16_t face_id = inFace.getId();
-  std::cout << getTimestamp() << ": BSI " << face_id << " " << data.getFullName() << std::endl;
-  /*ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
-  if(dataType != ndn_ntorrent::IoUtil::DATA_PACKET)
+  ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
+  if(dataType == ndn_ntorrent::IoUtil::UNKNOWN)
       return;
+  std::cout << getTimestamp() << ": BSI " << face_id << " " << data.getFullName() << std::endl;
   
-  uint16_t face_id = inFace.getId();
+  /*uint16_t face_id = inFace.getId();
   auto it1 = face_satisfaction_rate.find(face_id);
   //If nothing is found for this face, initialize it with 0 satisfied and 1 received
   std::pair<float,float> p = std::make_pair(0,1);
