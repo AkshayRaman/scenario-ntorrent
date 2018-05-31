@@ -74,16 +74,16 @@ main(int argc, char *argv[])
   AnimationInterface::SetConstantPosition (nodes.Get(7), 150, 60);
   
   createLink(p2p, nodes.Get(0), nodes.Get(1), "32kbps", "10ms");
-  createLink(p2p, nodes.Get(1), nodes.Get(2), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(2), "32kbps", "20ms");
   createLink(p2p, nodes.Get(2), nodes.Get(3), "32kbps", "10ms");
   
   createLink(p2p, nodes.Get(4), nodes.Get(5), "32kbps", "10ms");
   createLink(p2p, nodes.Get(5), nodes.Get(6), "32kbps", "10ms");
-  createLink(p2p, nodes.Get(6), nodes.Get(7), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(6), nodes.Get(7), "32kbps", "15ms");
   
-  createLink(p2p, nodes.Get(1), nodes.Get(5), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(5), "32kbps", "20ms");
   createLink(p2p, nodes.Get(2), nodes.Get(6), "32kbps", "10ms");
-  createLink(p2p, nodes.Get(1), nodes.Get(6), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(6), "32kbps", "20ms");
   createLink(p2p, nodes.Get(2), nodes.Get(5), "32kbps", "10ms");
   
   // Install NDN stack on all nodes
