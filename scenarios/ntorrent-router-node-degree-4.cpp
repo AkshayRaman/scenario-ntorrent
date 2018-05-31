@@ -33,7 +33,7 @@ main(int argc, char *argv[])
   //Config::SetDefault("ns3::PointToPointChannel::Delay", StringValue("10ms"));
 
   //defaults for command line arguments
-  uint32_t namesPerSegment = 2;
+  uint32_t namesPerSegment = 1;
   uint32_t namesPerManifest = 2;
   uint32_t dataPacketSize = 64;
   
@@ -55,7 +55,7 @@ main(int argc, char *argv[])
   
   //https://named-data.net/wp-content/uploads/2017/06/2017-icccn-ntorrent.pdf#figure.caption.7
   
-  //Peer 4 - Acts as seeder (here, producer)
+  //Peer 4 - Acts as seeder (producer)
   AnimationInterface::SetConstantPosition (nodes.Get(0), 75, 0);
   //Router 4 
   AnimationInterface::SetConstantPosition (nodes.Get(1), 75, 30);

@@ -99,16 +99,16 @@ main(int argc, char *argv[])
   createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(3), 1.0);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
-  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(4), 10.0);
+  createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(4), 5.0);
 
   ndn::AppHelper c2("NTorrentConsumerApp");
-  createAndInstall(c2, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(5), 10.0);
+  createAndInstall(c2, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(5), 6.0);
 
   ndn::AppHelper c3("NTorrentConsumerApp");
-  createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(6), 10.0);
+  createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(6), 7.0);
 
   ndn::AppHelper c4("NTorrentConsumerApp");
-  createAndInstall(c4, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(7), 10.0);
+  createAndInstall(c4, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(7), 8.0);
 
   Simulator::Stop(Seconds(120.0));
 
