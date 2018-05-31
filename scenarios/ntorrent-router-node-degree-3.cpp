@@ -73,23 +73,23 @@ main(int argc, char *argv[])
   //Peer 5
   AnimationInterface::SetConstantPosition (nodes.Get(7), 90, 120);
   
-  createLink(p2p, nodes.Get(0), nodes.Get(3), "10kbps", "10ms");
-  createLink(p2p, nodes.Get(0), nodes.Get(1), "10kbps", "15ms");
-  createLink(p2p, nodes.Get(0), nodes.Get(2), "10kbps", "10ms");
+  createLink(p2p, nodes.Get(0), nodes.Get(3), "160kbps", "10ms");
+  createLink(p2p, nodes.Get(0), nodes.Get(1), "160kbps", "15ms");
+  createLink(p2p, nodes.Get(0), nodes.Get(2), "160kbps", "10ms");
   
-  createLink(p2p, nodes.Get(1), nodes.Get(4), "2kbps", "25ms");
-  createLink(p2p, nodes.Get(1), nodes.Get(5), "2kbps", "30ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(4), "32kbps", "25ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(5), "32kbps", "30ms");
   
-  createLink(p2p, nodes.Get(2), nodes.Get(6), "2kbps", "25ms");
-  createLink(p2p, nodes.Get(2), nodes.Get(7), "2kbps", "20ms");
+  createLink(p2p, nodes.Get(2), nodes.Get(6), "32kbps", "25ms");
+  createLink(p2p, nodes.Get(2), nodes.Get(7), "32kbps", "20ms");
   
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
-  //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
-  StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
+  StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
+  //StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
 
   GlobalRoutingHelper ndnGlobalRoutingHelper;
   ndnGlobalRoutingHelper.InstallAll();
@@ -117,7 +117,7 @@ main(int argc, char *argv[])
   std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
   std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
   
-  ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
+  ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(3));
   GlobalRoutingHelper::CalculateRoutes();
 
   Simulator::Run();
