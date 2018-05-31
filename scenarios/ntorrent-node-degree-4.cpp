@@ -73,18 +73,18 @@ main(int argc, char *argv[])
   //Router 3
   AnimationInterface::SetConstantPosition (nodes.Get(7), 150, 60);
   
-  p2p.Install(nodes.Get(0), nodes.Get(1));
-  p2p.Install(nodes.Get(1), nodes.Get(2));
-  p2p.Install(nodes.Get(2), nodes.Get(3));
+  createLink(p2p, nodes.Get(0), nodes.Get(1), "2kbps", "10ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(2), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(2), nodes.Get(3), "32kbps", "10ms");
   
-  p2p.Install(nodes.Get(4), nodes.Get(5));
-  p2p.Install(nodes.Get(5), nodes.Get(6));
-  p2p.Install(nodes.Get(6), nodes.Get(7));
+  createLink(p2p, nodes.Get(4), nodes.Get(5), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(5), nodes.Get(6), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(6), nodes.Get(7), "32kbps", "10ms");
   
-  p2p.Install(nodes.Get(1), nodes.Get(5));
-  p2p.Install(nodes.Get(2), nodes.Get(6));
-  p2p.Install(nodes.Get(1), nodes.Get(6));
-  p2p.Install(nodes.Get(2), nodes.Get(5));
+  createLink(p2p, nodes.Get(1), nodes.Get(5), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(2), nodes.Get(6), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(1), nodes.Get(6), "32kbps", "10ms");
+  createLink(p2p, nodes.Get(2), nodes.Get(5), "32kbps", "10ms");
   
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
@@ -99,7 +99,7 @@ main(int argc, char *argv[])
 
   // Installing applications
   ndn::AppHelper p1("NTorrentProducerApp");
-  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0f);
+  createAndInstall(p1, namesPerSegment, namesPerManifest, dataPacketSize, "producer", nodes.Get(0), 1.0);
   
   ndn::AppHelper c1("NTorrentConsumerApp");
   createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(1), 3.0);
