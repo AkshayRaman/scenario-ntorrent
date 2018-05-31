@@ -42,6 +42,8 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
                                                  const shared_ptr<pit::Entry>& pitEntry)
 {
   NFD_LOG_TRACE("afterReceiveInterest");
+  uint16_t face_id = inFace.getId();
+  std::cout << getTimestamp() << ": ARI " << face_id << " " << interest.getName() << std::endl;
 
   if (hasPendingOutRecords(*pitEntry)) {
     // not a new Interest, don't forward
@@ -94,7 +96,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     //pick best hop
     it = interest_hop_score_map.find(interestName);
     face_score f = it->second;
-    int best_hop=-1; int best_score=0;
+    int best_hop=-1; int best_score=-1;
     
     for(std::pair<int, int> element : it->second)
     {
@@ -107,22 +109,22 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
             }
         }
     }
-    if(best_hop!=-1)
+    if(best_hop!=-1 && best_score!=-1)
     {
         //std::cout << "Using best hop: " << best_hop << std::endl;
         this->sendInterest(pitEntry, *getFace(best_hop), interest);
     }
     //else send NACK
         
-    /*Print the interest_hop_score_map
-     * for (std::pair<Name, face_score> element : interest_hop_score_map)
+    //Print the interest_hop_score_map
+    /*for (std::pair<Name, face_score> element : interest_hop_score_map)
     {
-        std::cout << element.first << std::endl;
+        //std::cout << element.first << std::endl;
         for(std::pair<int, int> e1 : element.second)
-            std::cout << e1.first << ", " << e1.second << std::endl;
+            std::cout << element.first << ", " << e1.first << ", " << e1.second << std::endl;
     }*/
 
-    uint16_t face_id = inFace.getId();
+    /*uint16_t face_id = inFace.getId();
     auto it1 = face_satisfaction_rate.find(face_id);
     //If nothing is found for this face, initialize it with 0 satisfied and 1 received
     std::pair<float,float> p = std::make_pair(0,1);
@@ -135,15 +137,16 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         p = it1->second;
         p.second += 1;
         it1->second = p;
-    }
-    std::cout << p.first << ", " << p.second << std::endl;
+    }*/
 }
 
 void
 NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntry, const Face &inFace, const Data &data)
 {
   NFD_LOG_TRACE("beforeSatisfyInterest");
-  ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
+  uint16_t face_id = inFace.getId();
+  std::cout << getTimestamp() << ": BSI " << face_id << " " << data.getFullName() << std::endl;
+  /*ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
   if(dataType != ndn_ntorrent::IoUtil::DATA_PACKET)
       return;
   
@@ -161,7 +164,7 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
       p.first += 1;
       it1->second = p;
   }
-  std::cout << p.first << ", " << p.second << std::endl;
+  std::cout << p.first << ", " << p.second << std::endl;*/
     
 }
   

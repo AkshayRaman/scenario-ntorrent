@@ -13,6 +13,7 @@ namespace ndn_ntorrent = ndn::ntorrent;
 #include "face/face.hpp"
 #include "fw/strategy.hpp"
 #include "fw/algorithm.hpp"
+#include <sys/time.h>
 
 namespace nfd {
 namespace fw {
@@ -50,6 +51,13 @@ public:
   
   static const Name&
   getStrategyName();
+
+  static long int getTimestamp(){
+    struct timeval tp;
+    gettimeofday(&tp, NULL);
+    long int ms = tp.tv_sec * 1000 + tp.tv_usec / 1000;
+    return ms;
+  }
 
 protected:
   boost::random::mt19937 m_randomGenerator;

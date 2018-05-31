@@ -33,7 +33,7 @@ main(int argc, char *argv[])
   //Config::SetDefault("ns3::PointToPointChannel::Delay", StringValue("10ms"));
 
   //defaults for command line arguments
-  uint32_t namesPerSegment = 2;
+  uint32_t namesPerSegment = 1;
   uint32_t namesPerManifest = 2;
   uint32_t dataPacketSize = 64;
   
