@@ -212,7 +212,6 @@ NTorrentConsumerApp::OnData(shared_ptr<const Data> data)
         GlobalRoutingHelper ndnGlobalRoutingHelper;
         ndnGlobalRoutingHelper.AddOrigin(data->getFullName().toUri(), GetNode());
         
-        //TODO: This can probably be optimized
         GlobalRoutingHelper::CalculateRoutes();
         //GlobalRoutingHelper::CalculateAllPossibleRoutes();
     }
@@ -229,7 +228,6 @@ NTorrentConsumerApp::OnData(shared_ptr<const Data> data)
     {
         case ndn_ntorrent::IoUtil::TORRENT_FILE:
         {
-            //TODO: Announce prefix - RibManager
             ndn_ntorrent::TorrentFile file(data->wireEncode());
             m_torrentSegments.push_back(file);
 
@@ -252,7 +250,6 @@ NTorrentConsumerApp::OnData(shared_ptr<const Data> data)
         }
         case ndn_ntorrent::IoUtil::FILE_MANIFEST:
         {
-            //TODO: Announce prefix - RibManager
             ndn_ntorrent::FileManifest fm(data->wireEncode());
             manifests.push_back(fm);
 
@@ -275,7 +272,6 @@ NTorrentConsumerApp::OnData(shared_ptr<const Data> data)
         }
         case ndn_ntorrent::IoUtil::DATA_PACKET:
         {
-            //TODO: Announce prefix - RibManager
             Data d(data->wireEncode());
             dataPackets.push_back(d);
             Block content = d.getContent();
