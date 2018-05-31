@@ -82,6 +82,20 @@ void createAndInstall(ndn::AppHelper x, uint32_t namesPerSegment,
   x.Install(n).Start(Seconds(startTime));
 }
 
+//Helper functions to create links...
+void createLink(PointToPointHelper p2p, Ptr<Node> n1, Ptr<Node> n2)
+{
+    p2p.Install(n1, n2);
+}
+
+//Helper functions to create links with parameters
+void createLink(PointToPointHelper p2p, Ptr<Node> n1, Ptr<Node> n2, std::string dataRate, std::string delay)
+{
+    p2p.SetDeviceAttribute ("DataRate", StringValue(dataRate));
+    p2p.SetChannelAttribute ("Delay", StringValue(delay));
+    p2p.Install(n1, n2);
+}
+
 } //namespace ndn
 } //namespace ns3
 
