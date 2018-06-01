@@ -61,98 +61,27 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     return;
   }
 
-  fib::NextHopList::const_iterator selected;
-  do {
-    boost::random::uniform_int_distribution<> dist(0, nexthops.size() - 1);
-    const size_t randomIndex = dist(m_randomGenerator);
-	
-    uint64_t currentIndex = 0;
-
-    for (selected = nexthops.begin(); selected != nexthops.end() && currentIndex != randomIndex;
-         ++selected, ++currentIndex) {
-    }
-  } while (!canForwardToNextHop(inFace, pitEntry, *selected));
-
-  this->sendInterest(pitEntry, selected->getFace(), interest);
-
-
-    /*boost::random::uniform_int_distribution<> dist(1, MAX_SCORE);
-    
-    std::unordered_map<Name, face_score>::iterator it = interest_hop_score_map.find(interestName);
-    if(it==interest_hop_score_map.end())
-    {
-        face_score f;
-        interest_hop_score_map.insert(std::make_pair(interestName, f));
-    }
-    
-    //Add randomScore to the data structure
-    fib::NextHopList::const_iterator selected;
-    for (selected = nexthops.begin(); selected != nexthops.end(); ++selected) {
-        size_t randomScore = dist(m_randomGenerator);
-        int face_id = selected->getFace().getId();
+  //Use this logic if map isn't populated...
+  if(name_incoming_time.size()==0){
+      fib::NextHopList::const_iterator selected;
+      do {
+        boost::random::uniform_int_distribution<> dist(0, nexthops.size() - 1);
+        const size_t randomIndex = dist(m_randomGenerator);
         
-        auto it = interest_hop_score_map.find(interestName);
-         
-        face_score f = it->second;
-        auto f_it = f.find(face_id);
-        if(f_it == f.end())
-        {
-            //"Force" best score, always use same hop
-            //if(face_id==256) randomScore=MAX_SCORE+1;
-            f.insert(std::pair<int,int>(face_id, randomScore));
-        }
-        else
-        {
-            f_it->second += randomScore;
-        }
-        it->second = f;
-    }
-    
-    //pick best hop
-    it = interest_hop_score_map.find(interestName);
-    face_score f = it->second;
-    int best_hop=-1; int best_score=-1;
-    
-    for(std::pair<int, int> element : it->second)
-    {
-        if(element.second > best_score)
-        {
-            Face *face = getFace(element.first);
-            if(canForwardToNextHop(inFace, pitEntry, fib::NextHop(*face))){
-                best_score = element.second;
-                best_hop = element.first;
-            }
-        }
-    }
-    if(best_hop!=-1 && best_score!=-1)
-    {
-        //std::cout << "Using best hop: " << best_hop << std::endl;
-        this->sendInterest(pitEntry, *getFace(best_hop), interest);
-    }
-    //else send NACK
-        
-    //Print the interest_hop_score_map
-    for (std::pair<Name, face_score> element : interest_hop_score_map)
-    {
-        //std::cout << element.first << std::endl;
-        for(std::pair<int, int> e1 : element.second)
-            std::cout << element.first << ", " << e1.first << ", " << e1.second << std::endl;
-    }
+        uint64_t currentIndex = 0;
 
-    uint16_t face_id = inFace.getId();
-    auto it1 = face_satisfaction_rate.find(face_id);
-    //If nothing is found for this face, initialize it with 0 satisfied and 1 received
-    std::pair<float,float> p = std::make_pair(0,1);
-    if(it1==face_satisfaction_rate.end())
-    {
-      face_satisfaction_rate.insert(std::make_pair(face_id, p));
-    }
-    else
-    {
-        p = it1->second;
-        p.second += 1;
-        it1->second = p;
-    }*/
+        for (selected = nexthops.begin(); selected != nexthops.end() && currentIndex != randomIndex;
+             ++selected, ++currentIndex) {
+        }
+      } while (!canForwardToNextHop(inFace, pitEntry, *selected));
+
+      this->sendInterest(pitEntry, selected->getFace(), interest);
+  }
+
+  else
+  {
+      //TODO: Implement logic here...
+  }
 }
 
 void
@@ -165,22 +94,6 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
       return;
   std::cout << getTimestamp() << ": BSI " << face_id << " " << data.getFullName() << std::endl;
   
-  /*uint16_t face_id = inFace.getId();
-  auto it1 = face_satisfaction_rate.find(face_id);
-  //If nothing is found for this face, initialize it with 0 satisfied and 1 received
-  std::pair<float,float> p = std::make_pair(0,1);
-  if(it1==face_satisfaction_rate.end())
-  {
-    face_satisfaction_rate.insert(std::make_pair(face_id, p));
-  }
-  else
-  {
-      p = it1->second;
-      p.first += 1;
-      it1->second = p;
-  }
-  std::cout << p.first << ", " << p.second << std::endl;*/
-    
 }
   
 void
