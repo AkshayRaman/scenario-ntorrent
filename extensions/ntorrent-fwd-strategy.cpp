@@ -62,7 +62,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
   }
 
   //Use this logic if map isn't populated...
-  if(name_incoming_time.size()==0){
+  if(face_average_delay.size()==0){
       fib::NextHopList::const_iterator selected;
       do {
         boost::random::uniform_int_distribution<> dist(0, nexthops.size() - 1);
