@@ -43,7 +43,8 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
 {
   NFD_LOG_TRACE("afterReceiveInterest");
   uint16_t face_id = inFace.getId();
-  std::cout << getTimestamp() << ": ARI " << face_id << " " << interest.getName() << std::endl;
+  Name interestName = interest.getName();
+  std::cout << getTimestamp() << ": ARI " << face_id << " " << interestName << std::endl;
 
   if (hasPendingOutRecords(*pitEntry)) {
     // not a new Interest, don't forward
@@ -60,9 +61,23 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     return;
   }
 
-    boost::random::uniform_int_distribution<> dist(1, MAX_SCORE);
+  fib::NextHopList::const_iterator selected;
+  do {
+    boost::random::uniform_int_distribution<> dist(0, nexthops.size() - 1);
+    const size_t randomIndex = dist(m_randomGenerator);
+	
+    uint64_t currentIndex = 0;
+
+    for (selected = nexthops.begin(); selected != nexthops.end() && currentIndex != randomIndex;
+         ++selected, ++currentIndex) {
+    }
+  } while (!canForwardToNextHop(inFace, pitEntry, *selected));
+
+  this->sendInterest(pitEntry, selected->getFace(), interest);
+
+
+    /*boost::random::uniform_int_distribution<> dist(1, MAX_SCORE);
     
-    Name interestName = interest.getName();
     std::unordered_map<Name, face_score>::iterator it = interest_hop_score_map.find(interestName);
     if(it==interest_hop_score_map.end())
     {
@@ -117,14 +132,14 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     //else send NACK
         
     //Print the interest_hop_score_map
-    /*for (std::pair<Name, face_score> element : interest_hop_score_map)
+    for (std::pair<Name, face_score> element : interest_hop_score_map)
     {
         //std::cout << element.first << std::endl;
         for(std::pair<int, int> e1 : element.second)
             std::cout << element.first << ", " << e1.first << ", " << e1.second << std::endl;
-    }*/
+    }
 
-    /*uint16_t face_id = inFace.getId();
+    uint16_t face_id = inFace.getId();
     auto it1 = face_satisfaction_rate.find(face_id);
     //If nothing is found for this face, initialize it with 0 satisfied and 1 received
     std::pair<float,float> p = std::make_pair(0,1);
