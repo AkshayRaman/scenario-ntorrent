@@ -81,9 +81,9 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     it->second = n;
     face_name_incoming_time.insert(std::make_pair(face_id, n));
   }
+  
   /* dump out everything from face_name_incoming_time */
-
-  for(auto i=face_name_incoming_time.begin(); i!=face_name_incoming_time.end(); ++i)
+  /*for(auto i=face_name_incoming_time.begin(); i!=face_name_incoming_time.end(); ++i)
   {
     std::cout << i->first << "{ ";
     for(auto j=i->second.begin(); j!=i->second.end(); ++j)
@@ -91,9 +91,9 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
         std::cout << j->first << ": " << j->second << ", ";
     }
     std::cout << "}" << std::endl;
-  }
+  }*/
 
-  //Use this logic if map isn't populated...
+  //Pick one face at random if you have no information about delay
   if(face_average_delay.size()==0){
       fib::NextHopList::const_iterator selected;
       do {
