@@ -59,6 +59,21 @@ public:
     return us;
   }
 
+  /* dump out everything from face_name_incoming_time */
+  static void dump_hash(std::string label, std::unordered_map<int,std::unordered_map<Name, long int>> face_name_incoming_time){  
+    std::cout << label;
+  for(auto i=face_name_incoming_time.begin(); i!=face_name_incoming_time.end(); ++i)
+  {
+    std::cout << i->first << ": { ";
+    for(auto j=i->second.begin(); j!=i->second.end(); ++j)
+    {
+        std::cout << j->first << ": " << j->second << ", ";
+    }
+    std::cout << "}, " << std::endl;
+  }
+  std::cout << std::endl;
+}
+
 protected:
   boost::random::mt19937 m_randomGenerator;
 
