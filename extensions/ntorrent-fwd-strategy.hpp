@@ -62,7 +62,7 @@ public:
 protected:
   boost::random::mt19937 m_randomGenerator;
 
-  typedef std::pair<Name,long int> name_incoming_time;
+  typedef std::unordered_map<Name,long int> name_incoming_time;
   std::unordered_map<int, name_incoming_time> face_name_incoming_time;
   std::unordered_map<int, std::pair<int,int>> face_average_delay;
   

@@ -44,7 +44,8 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
   NFD_LOG_TRACE("afterReceiveInterest");
   uint16_t face_id = inFace.getId();
   Name interestName = interest.getName();
-  std::cout << getTimestamp() << ": ARI " << face_id << " " << interestName << std::endl;
+  long int curr_timestamp = getTimestamp();
+  std::cout << curr_timestamp << ": ARI " << face_id << " " << interestName << std::endl;
 
   if (hasPendingOutRecords(*pitEntry)) {
     // not a new Interest, don't forward
@@ -59,6 +60,37 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
   if (!hasFaceForForwarding(inFace, nexthops, pitEntry)) {
     this->rejectPendingInterest(pitEntry);
     return;
+  }
+
+  auto it = face_name_incoming_time.find(face_id);
+  name_incoming_time n;
+  //If there's no such face in the map, create an entry, store the interest name and arrival timestamp
+  if(it==face_name_incoming_time.end())
+  {
+      n.insert(std::make_pair(interestName, curr_timestamp));
+      face_name_incoming_time.insert(std::make_pair(face_id, n));
+  }
+  //If there's this face in the map, check if the interest name already exists...
+  else
+  {
+    n = it->second;
+    //auto _it = n.find(interestName);
+    //If it doesn't exist, create a new interestName-> arrival time mapping
+    //If it exists, update the latest arrival time
+    n.insert(std::make_pair(interestName, curr_timestamp));
+    it->second = n;
+    face_name_incoming_time.insert(std::make_pair(face_id, n));
+  }
+  /* dump out everything from face_name_incoming_time */
+
+  for(auto i=face_name_incoming_time.begin(); i!=face_name_incoming_time.end(); ++i)
+  {
+    std::cout << i->first << "{ ";
+    for(auto j=i->second.begin(); j!=i->second.end(); ++j)
+    {
+        std::cout << j->first << ": " << j->second << ", ";
+    }
+    std::cout << "}" << std::endl;
   }
 
   //Use this logic if map isn't populated...
@@ -80,7 +112,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
 
   else
   {
-      //TODO: Implement logic here...
+      //TODO: Implement logic to pick best one here...
   }
 }
 
@@ -89,10 +121,11 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
 {
   NFD_LOG_TRACE("beforeSatisfyInterest");
   uint16_t face_id = inFace.getId();
+  long int curr_timestamp = getTimestamp();
   ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
   if(dataType == ndn_ntorrent::IoUtil::UNKNOWN)
       return;
-  std::cout << getTimestamp() << ": BSI " << face_id << " " << data.getFullName() << std::endl;
+  std::cout << curr_timestamp << ": BSI " << face_id << " " << data.getFullName() << std::endl;
   
 }
   
