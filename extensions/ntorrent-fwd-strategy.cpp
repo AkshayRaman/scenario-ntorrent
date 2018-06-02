@@ -82,16 +82,6 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     face_name_incoming_time.insert(std::make_pair(face_id, n));
   }
   
-  /* dump out everything from face_name_incoming_time */
-  /*for(auto i=face_name_incoming_time.begin(); i!=face_name_incoming_time.end(); ++i)
-  {
-    std::cout << i->first << "{ ";
-    for(auto j=i->second.begin(); j!=i->second.end(); ++j)
-    {
-        std::cout << j->first << ": " << j->second << ", ";
-    }
-    std::cout << "}" << std::endl;
-  }*/
 
   //Pick one face at random if you have no information about delay
   if(face_average_delay.size()==0){
@@ -108,6 +98,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
       } while (!canForwardToNextHop(inFace, pitEntry, *selected));
 
       this->sendInterest(pitEntry, selected->getFace(), interest);
+      //std::cout << face_id << " -> " << selected->getFace().getId() << std::endl;
   }
 
   else
@@ -121,12 +112,34 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
 {
   NFD_LOG_TRACE("beforeSatisfyInterest");
   uint16_t face_id = inFace.getId();
+  Name dataName = data.getFullName();
   long int curr_timestamp = getTimestamp();
-  ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(data.getFullName());
+  
+  ndn_ntorrent::IoUtil::NAME_TYPE dataType = ndn_ntorrent::IoUtil::findType(dataName);
   if(dataType == ndn_ntorrent::IoUtil::UNKNOWN)
       return;
-  std::cout << curr_timestamp << ": BSI " << face_id << " " << data.getFullName() << std::endl;
-  
+  std::cout << curr_timestamp << ": BSI " << face_id << " " << dataName << std::endl;
+
+  //Need to revisit this logic...
+  /*const fib::Entry& fibEntry = this->lookupFib(*pitEntry);
+  const fib::NextHopList& nexthops = fibEntry.getNextHops();
+  fib::NextHopList::const_iterator selected;
+  for (selected = nexthops.begin(); selected != nexthops.end(); ++selected) {
+      uint16_t outface_id = selected->getFace().getId();
+      auto it = face_name_incoming_time.find(outface_id);
+      
+      //This should always be true because you can't satisfy an interest because you receive it!
+      if(it!=face_name_incoming_time.end())
+      {
+        name_incoming_time n;
+        n = it->second;
+        std::cout << face_id << " ::: " << it->first << std::endl;
+      }
+      else
+      {
+          std::cout << "WHAT???" << std::endl;
+      }
+  }*/
 }
   
 void
