@@ -112,6 +112,8 @@ Available simulations
     ntorrent-multi-consumer
     ntorrent-fully-connected-consumer
     ntorrent-forwarding-scenario
+    ntorrent-router-node-degree-3
+    ntorrent-router-node-degree-4
 ---------------
 
 A work in progress...
