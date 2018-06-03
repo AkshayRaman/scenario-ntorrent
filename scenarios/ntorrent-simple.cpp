@@ -64,6 +64,11 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
+  std::cout << "Running with parameters: " << std::endl;
+  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
+  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
+  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
+  
   // Creating nodes
   NodeContainer nodes;
   nodes.Create(2);
@@ -81,8 +86,9 @@ main(int argc, char *argv[])
 
   // Connecting nodes using two links
   PointToPointHelper p2p;
-  p2p.Install(nodes.Get(0), nodes.Get(1));
-  
+  //p2p.Install(nodes.Get(0), nodes.Get(1));
+  createLink(p2p, nodes.Get(0), nodes.Get(1));
+
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
   //ndnHelper.SetDefaultRoutes(true);
@@ -101,16 +107,10 @@ main(int argc, char *argv[])
   ndn::AppHelper c1("NTorrentConsumerApp");
   createAndInstall(c1, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(1), 3.0f);
   
-  Simulator::Stop(Seconds(60.0));
-
-  std::cout << "Running with parameters: " << std::endl;
-  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
-  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
-  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
-  
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
   GlobalRoutingHelper::CalculateRoutes();
 
+  Simulator::Stop(Seconds(60.0));
   Simulator::Run();
   Simulator::Destroy();
   
