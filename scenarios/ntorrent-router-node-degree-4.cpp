@@ -44,6 +44,11 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
+  std::cout << "Running with parameters: " << std::endl;
+  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
+  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
+  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
+  
   int nodeCount = 8;
   
   // Creating nodes
@@ -111,18 +116,11 @@ main(int argc, char *argv[])
   ndn::AppHelper c3("NTorrentConsumerApp");
   createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(3), 10.0);
 
-  Simulator::Stop(Seconds(120.0));
-
-  std::cout << "Running with parameters: " << std::endl;
-  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
-  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
-  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
-  
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
   GlobalRoutingHelper::CalculateRoutes();
 
+  Simulator::Stop(Seconds(120.0));
   ndn::L3RateTracer::InstallAll("node-degree-4.txt", Seconds(0.5));
-
   Simulator::Run();
   Simulator::Destroy();
   
