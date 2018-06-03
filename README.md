@@ -114,6 +114,11 @@ Available simulations
     ntorrent-forwarding-scenario
     ntorrent-router-node-degree-3
     ntorrent-router-node-degree-4
+
+Results
+=====================
+    Rscript rate-graph.R <name-of-rate-trace-file.txt>
+
 ---------------
 
 A work in progress...
