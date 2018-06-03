@@ -120,6 +120,7 @@ main(int argc, char *argv[])
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(3));
   GlobalRoutingHelper::CalculateRoutes();
 
+  ndn::L3RateTracer::InstallAll("node-degree-3.txt", Seconds(0.5));
   Simulator::Run();
   Simulator::Destroy();
   

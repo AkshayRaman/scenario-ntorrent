@@ -92,7 +92,8 @@ main(int argc, char *argv[])
 
   // Choosing forwarding strategy
   //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
-  StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
+  //StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
+  StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/client-control");
 
   GlobalRoutingHelper ndnGlobalRoutingHelper;
   ndnGlobalRoutingHelper.InstallAll();
@@ -119,6 +120,8 @@ main(int argc, char *argv[])
   
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
   GlobalRoutingHelper::CalculateRoutes();
+
+  ndn::L3RateTracer::InstallAll("node-degree-4.txt", Seconds(0.5));
 
   Simulator::Run();
   Simulator::Destroy();
