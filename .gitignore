@@ -4,3 +4,4 @@
 .lock*
 build/
 *.pyc
+graphs/
