@@ -89,6 +89,7 @@ main(int argc, char *argv[])
 
   // Choosing forwarding strategy
   //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/multicast");
+  //StrategyChoiceHelper::InstallAll("/", "/localhost/nfd/strategy/client-control");
   StrategyChoiceHelper::Install<nfd_fw::NTorrentStrategy>(nodes, "/");
 
   GlobalRoutingHelper ndnGlobalRoutingHelper;
