@@ -120,26 +120,6 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
       return;
   std::cout << curr_timestamp << ": BSI " << face_id << " " << dataName << std::endl;
 
-  //Need to revisit this logic...
-  /*const fib::Entry& fibEntry = this->lookupFib(*pitEntry);
-  const fib::NextHopList& nexthops = fibEntry.getNextHops();
-  fib::NextHopList::const_iterator selected;
-  for (selected = nexthops.begin(); selected != nexthops.end(); ++selected) {
-      uint16_t outface_id = selected->getFace().getId();
-      auto it = face_name_incoming_time.find(outface_id);
-      
-      //This should always be true because you can't satisfy an interest because you receive it!
-      if(it!=face_name_incoming_time.end())
-      {
-        name_incoming_time n;
-        n = it->second;
-        std::cout << face_id << " ::: " << it->first << std::endl;
-      }
-      else
-      {
-          std::cout << "WHAT???" << std::endl;
-      }
-  }*/
 }
   
 void
