@@ -44,6 +44,11 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
+  std::cout << "Running with parameters: " << std::endl;
+  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
+  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
+  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
+  
   // Creating nodes
   NodeContainer nodes;
   nodes.Create(7);
@@ -91,16 +96,10 @@ main(int argc, char *argv[])
   ndn::AppHelper c3("NTorrentConsumerApp");
   createAndInstall(c3, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(6), 16.0f);
 
-  Simulator::Stop(Seconds(120.0));
-
-  std::cout << "Running with parameters: " << std::endl;
-  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
-  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
-  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
-  
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
   GlobalRoutingHelper::CalculateRoutes();
 
+  Simulator::Stop(Seconds(60.0));
   Simulator::Run();
   Simulator::Destroy();
   
