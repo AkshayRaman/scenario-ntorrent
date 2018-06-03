@@ -44,6 +44,11 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
+  std::cout << "Running with parameters: " << std::endl;
+  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
+  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
+  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
+  
   int nodeCount = 11;
   int radius = 50;
   
@@ -101,16 +106,10 @@ main(int argc, char *argv[])
       std::cout << "Node " << i << " starts at " << rand_time << "s" << std::endl;
   }
 
-  Simulator::Stop(Seconds(120.0));
-
-  std::cout << "Running with parameters: " << std::endl;
-  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
-  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
-  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
-  
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
   GlobalRoutingHelper::CalculateRoutes();
 
+  Simulator::Stop(Seconds(120.0));
   Simulator::Run();
   Simulator::Destroy();
   
