@@ -43,19 +43,24 @@ main(int argc, char *argv[])
   cmd.AddValue("dataPacketSize", "Data Packet size", dataPacketSize);
   cmd.Parse(argc, argv);
 
+  std::cout << "Running with parameters: " << std::endl;
+  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
+  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
+  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
+  
   // Creating nodes
   NodeContainer nodes;
   nodes.Create(8);
   
   // Connecting nodes using two links
   PointToPointHelper p2p;
-  p2p.Install(nodes.Get(0), nodes.Get(1));
-  p2p.Install(nodes.Get(3), nodes.Get(2));
-  p2p.Install(nodes.Get(1), nodes.Get(3));
-  p2p.Install(nodes.Get(3), nodes.Get(4));
-  p2p.Install(nodes.Get(4), nodes.Get(5));
-  p2p.Install(nodes.Get(2), nodes.Get(6));
-  p2p.Install(nodes.Get(2), nodes.Get(7));
+  createLink(p2p, nodes.Get(0), nodes.Get(1));
+  createLink(p2p, nodes.Get(3), nodes.Get(2));
+  createLink(p2p, nodes.Get(1), nodes.Get(3));
+  createLink(p2p, nodes.Get(3), nodes.Get(4));
+  createLink(p2p, nodes.Get(4), nodes.Get(5));
+  createLink(p2p, nodes.Get(2), nodes.Get(6));
+  createLink(p2p, nodes.Get(2), nodes.Get(7));
   
   // Install NDN stack on all nodes
   StackHelper ndnHelper;
@@ -99,16 +104,10 @@ main(int argc, char *argv[])
   createAndInstall(c6, namesPerSegment, namesPerManifest, dataPacketSize, "consumer", nodes.Get(7), 11.0f);
   AnimationInterface::SetConstantPosition (nodes.Get(7), 200, 90);
   
-  Simulator::Stop(Seconds(60.0));
-
-  std::cout << "Running with parameters: " << std::endl;
-  std::cout << "namesPerSegment: " << namesPerSegment << std::endl;
-  std::cout << "namesPerManifest: " << namesPerManifest << std::endl;
-  std::cout << "dataPacketSize: " << dataPacketSize << std::endl;
-  
   ndnGlobalRoutingHelper.AddOrigins("/NTORRENT", nodes.Get(0));
   GlobalRoutingHelper::CalculateRoutes();
 
+  Simulator::Stop(Seconds(60.0));
   Simulator::Run();
   Simulator::Destroy();
   
