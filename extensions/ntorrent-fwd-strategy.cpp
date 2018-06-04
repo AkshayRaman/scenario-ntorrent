@@ -82,6 +82,23 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     face_name_incoming_time.erase(face_id);
     face_name_incoming_time.insert(std::make_pair(face_id, n));
   }
+
+  //Populate satisfaction rate
+  auto f_it = face_satisfaction_rate.find(face_id);
+  //If the face doesn't exist, easy: Create a new entry in the map and store 0 data sent and 1 interest received
+  if(f_it==face_satisfaction_rate.end())
+  {
+      face_satisfaction_rate.insert(std::make_pair(face_id,std::make_pair(0,1)));
+  }
+  //Otherwise, update the interest count
+  else
+  {
+      int data_sent = f_it->second.first;
+      int interests_received = f_it->second.second;
+      interests_received+=1;
+      face_satisfaction_rate.erase(face_id);
+      face_satisfaction_rate.insert(std::make_pair(face_id, std::make_pair(data_sent, interests_received)));
+  }
   
   //Pick one face at random if you have no information about delay
   if(face_average_delay.size()==0){
@@ -132,6 +149,18 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
   if(dataType == ndn_ntorrent::IoUtil::UNKNOWN)
       return;
   std::cout << curr_timestamp << ": BSI " << face_id << " " << dataName << std::endl;
+  
+  //Update satisfaction rate
+  auto f_it = face_satisfaction_rate.find(face_id);
+  //The face should exist..
+  if(f_it!=face_satisfaction_rate.end())
+  {
+      int data_sent = f_it->second.first;
+      int interests_received = f_it->second.second;
+      data_sent+=1;
+      face_satisfaction_rate.erase(face_id);
+      face_satisfaction_rate.insert(std::make_pair(face_id, std::make_pair(data_sent, interests_received)));
+  }
   
   auto it = face_name_incoming_time.find(face_id);
   name_incoming_time n;

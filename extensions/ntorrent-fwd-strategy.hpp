@@ -88,7 +88,9 @@ protected:
 
   typedef std::unordered_map<Name,long int> name_incoming_time;
   std::unordered_map<int, name_incoming_time> face_name_incoming_time;
+  
   std::unordered_map<int, std::pair<int,int>> face_average_delay;
+  std::unordered_map<int, std::pair<int,int>> face_satisfaction_rate;
   
   std::unordered_map<Name,std::vector<int>> nackedname_nexthop;
 };
