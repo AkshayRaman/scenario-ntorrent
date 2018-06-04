@@ -118,6 +118,7 @@ Available simulations
 Results
 =====================
 Log the trace into a file using L3RateTracer (refer to scenarios/ntorrent-router-node-degree-4.cpp)
+    
     Rscript rate-graph.R <name-of-trace-file.txt>
 
 ---------------
