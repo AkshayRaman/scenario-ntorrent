@@ -101,9 +101,9 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
       //std::cout << face_id << " -> " << selected->getFace().getId() << std::endl;
   }
 
+  //Logic to pick best one here...
   else
   {
-      //TODO: Implement logic to pick best one here...
   }
 }
 
