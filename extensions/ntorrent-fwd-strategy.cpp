@@ -79,6 +79,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     //If it exists, update the latest arrival time
     n.insert(std::make_pair(interestName, curr_timestamp));
     it->second = n;
+    face_name_incoming_time.erase(face_id);
     face_name_incoming_time.insert(std::make_pair(face_id, n));
   }
   
@@ -123,25 +124,38 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
   auto it = face_name_incoming_time.find(face_id);
   name_incoming_time n;
   
+  //Check if the face exists in the map, and if it does...
   if(it != face_name_incoming_time.end())
   {
+    
     n = it->second;
+    //Look for the name in the unordered map 
     auto it1 = n.find(dataName);
+    //if it exists, extract the timestamp and update the face_average_delay member
+    //Delete it from the unordered map
     if(it1 != n.end())
     {
         long int old_timestamp = it1->second;
         n.erase(dataName);
         it->second = n;
 
-        int added_delay = curr_timestamp - old_timestamp;
+        int added_delay = (int)(curr_timestamp - old_timestamp);
 
         auto it2 = face_average_delay.find(face_id);
+        //If this face already has delay statistics, update it
         if(it2!=face_average_delay.end())
         {
+            std::pair<int,int> prev_delay_stats = it2->second;
+            int new_delay = prev_delay_stats.first + added_delay;
+            int new_freq = prev_delay_stats.second + 1;
+            face_average_delay.erase(face_id);
+            face_average_delay.insert(std::make_pair(face_id, std::make_pair(new_delay, new_freq)));
+
         }
+        //Otherwise, create it
         else
         {
-            //face_average_delay.insert(face_id, std::make_pair(added_delay, 1));
+            face_average_delay.insert(std::make_pair(face_id, std::make_pair(added_delay, 1)));
         }
     }
   }	  
