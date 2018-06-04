@@ -106,6 +106,15 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
   {
       std::vector<std::pair<int, std::pair<int,int>>> elems(face_average_delay.begin(), face_average_delay.end());
       std::sort(elems.begin(), elems.end(), compareDelay);
+
+      for(auto i=elems.begin(); i!= elems.end(); i++)
+      {
+            int f_id =  i->first;
+            Face *face = getFace(f_id);
+            if(canForwardToNextHop(inFace, pitEntry, fib::NextHop(*face))){
+                this->sendInterest(pitEntry, *getFace(f_id), interest);
+            }
+      }
   }
 }
 
