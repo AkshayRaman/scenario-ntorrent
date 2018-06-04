@@ -83,7 +83,6 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
     face_name_incoming_time.insert(std::make_pair(face_id, n));
   }
   
-
   //Pick one face at random if you have no information about delay
   if(face_average_delay.size()==0){
       fib::NextHopList::const_iterator selected;
@@ -102,9 +101,11 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
       //std::cout << face_id << " -> " << selected->getFace().getId() << std::endl;
   }
 
-  //Logic to pick best one here...
+  //Otherwise, pick the face with the lowest delay
   else
   {
+      std::vector<std::pair<int, std::pair<int,int>>> elems(face_average_delay.begin(), face_average_delay.end());
+      std::sort(elems.begin(), elems.end(), compareDelay);
   }
 }
 

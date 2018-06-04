@@ -74,6 +74,15 @@ public:
   std::cout << std::endl;
 }
 
+  /* Function to compare delay in face_average_delay map*/
+  static bool compareDelay(std::pair<int, std::pair<int,int>> a, std::pair<int, std::pair<int,int>> b) {
+        float delay1=a.second.first;
+        int freq1=a.second.second;
+        float delay2=b.second.first;
+        int freq2=b.second.second;
+        return delay1/freq1 < delay2/freq2; 
+  }
+
 protected:
   boost::random::mt19937 m_randomGenerator;
 
