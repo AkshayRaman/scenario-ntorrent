@@ -119,7 +119,32 @@ NTorrentStrategy::beforeSatisfyInterest (const shared_ptr< pit::Entry > &pitEntr
   if(dataType == ndn_ntorrent::IoUtil::UNKNOWN)
       return;
   std::cout << curr_timestamp << ": BSI " << face_id << " " << dataName << std::endl;
+  
+  auto it = face_name_incoming_time.find(face_id);
+  name_incoming_time n;
+  
+  if(it != face_name_incoming_time.end())
+  {
+    n = it->second;
+    auto it1 = n.find(dataName);
+    if(it1 != n.end())
+    {
+        long int old_timestamp = it1->second;
+        n.erase(dataName);
+        it->second = n;
 
+        int added_delay = curr_timestamp - old_timestamp;
+
+        auto it2 = face_average_delay.find(face_id);
+        if(it2!=face_average_delay.end())
+        {
+        }
+        else
+        {
+            //face_average_delay.insert(face_id, std::make_pair(added_delay, 1));
+        }
+    }
+  }	  
 }
   
 void
