@@ -104,6 +104,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
   //Otherwise, pick the face with the lowest delay
   else
   {
+      //sort the face_average_delay member based on the average delay, in ascending order
       std::vector<std::pair<int, std::pair<int,int>>> elems(face_average_delay.begin(), face_average_delay.end());
       std::sort(elems.begin(), elems.end(), compareDelay);
 
@@ -113,6 +114,7 @@ NTorrentStrategy::afterReceiveInterest (const Face& inFace, const Interest& inte
             Face *face = getFace(f_id);
             if(canForwardToNextHop(inFace, pitEntry, fib::NextHop(*face))){
                 this->sendInterest(pitEntry, *getFace(f_id), interest);
+                break;
             }
       }
   }
