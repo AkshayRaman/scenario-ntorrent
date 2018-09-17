@@ -15,8 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Spyridon (Spyros) Mastorakis <mastorakis@cs.ucla.edu>
- *          Alexander Afanasyev <alexander.afanasyev@ucla.edu>
+ * Authors: Akshay Raman <akshay.raman@cs.ucla.edu>
  */
 
 #include "simulation-common.hpp"
