@@ -14,7 +14,7 @@ The code should also work with the latest version of ndnSIM, but it is not guara
 
     # Build and install NS-3 and ndnSIM
     cd ns-3
-    ./waf configure -d optimized
+    ./waf configure --boost-includes=/usr/local/include --boost-libs=/usr/local/lib -d optimized
     ./waf
     sudo ./waf install
 
